@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Vintage Newspaper</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    
+  <header class="header">
+    <h1>SAN VALENTIN</h1>
+    <p class="subtitle">Adriana Paola Ticona Salcedo</p>
+  </header>
+  <div class="image-container">
+  <img src="foto.jpg" alt="Nuestra historia">
+</div>
+  <main class="container">
+    <section class="column">
+  <h2>Para ti</h2>
+  <p>
+    No sabia como decirte una vez mas todo lo que siento por ti,
+    asi que decidi hacer algo fuera de lo comun y de lo que se hacer
+    espero te guste.
+  </p>
+  <p>
+    Esta pagina no es solo una invitación, es una pequeña muestra
+    de lo mucho que significas para mí.
+  </p>
+  
+</section>
+<section class="column">
+  <h2>Lo que siento</h2>
+  <p>
+    Desde que estas en mi vida, los días tienen más luz,
+    todo es mas especial y mi corazon encontró su lugar.
+  </p>
+  <p>
+    Prometo cuidarte, hacerte sonreír
+    y recordarte lo especial que eres para mí.
+  </p>
+</section>
+<section class="column">
+  <h2>La pregunta</h2>
+  <p>
+    ¿Aceptarías ser mi San Valentín?
+  </p>
+  <div class="button-container">
+  <button id="loveButton">Sí, acepto 💖</button>
+</div>
+
+</section>
+
+  </main>
+
+  <footer class="footer">
+    <p>Con amor hoy y siempre</p>
+    <p>Renato Olaechea</p>
+  </footer>
+<div id="loveOverlay">
+  <div class="love-content">
+    <h1>Te amo 💖</h1>
+    <p>
+      Gracias por decir que sí.<br>
+      Nuestro primer San valentin 
+    </p>
+  </div>
+</div>
+<script>
+  const button = document.getElementById("loveButton");
+  const overlay = document.getElementById("loveOverlay");
+
+  let heartsInterval;
+
+  button.addEventListener("click", () => {
+    overlay.style.display = "flex";
+    overlay.style.opacity = "1";
+    createHearts();
+  });
+
+  overlay.addEventListener("click", () => {
+    overlay.classList.add("hide");
+
+    setTimeout(() => {
+      overlay.style.display = "none";
+      overlay.classList.remove("hide");
+      stopHearts();
+    }, 800);
+  });
+
+  function createHearts() {
+    heartsInterval = setInterval(() => {
+      const heart = document.createElement("div");
+      heart.classList.add("heart");
+      heart.textContent = "💖";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.fontSize = Math.random() * 20 + 20 + "px";
+      overlay.appendChild(heart);
+
+      setTimeout(() => {
+        heart.remove();
+      }, 6000);
+    }, 300);
+  }
+
+  function stopHearts() {
+    clearInterval(heartsInterval);
+    document.querySelectorAll(".heart").forEach(h => h.remove());
+  }
+</script>
+
+
+
+
+</body>
+</html>
