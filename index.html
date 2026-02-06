@@ -9,6 +9,15 @@
 </head>
 
 <body>
+  <div id="nameScreen">
+  <div class="name-box">
+    <h2>Para poder entrar</h2>
+    <p>Escribe tu nombre 💌</p>
+    <input type="text" id="nameInput" placeholder="Tu nombre">
+    <button id="enterButton">Entrar</button>
+  </div>
+</div>
+
     
   <header class="header">
     <h1>SAN VALENTIN</h1>
@@ -69,50 +78,79 @@
   </div>
 </div>
 <script>
+  const nombreCorrecto = "Adriana"; // ← cambia aquí si quieres
+
   const button = document.getElementById("loveButton");
   const overlay = document.getElementById("loveOverlay");
+  const enterBtn = document.getElementById("enterButton");
+  const nameInput = document.getElementById("nameInput");
+  const nameScreen = document.getElementById("nameScreen");
 
-  let heartsInterval;
+  const normalizar = (texto) =>
+    texto
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "");
 
+  // ENTRAR CON NOMBRE
+  enterBtn.addEventListener("click", () => {
+    const name = nameInput.value.trim();
+
+    if (name === "") {
+      alert("Escribe tu nombre para entrar 💕");
+      return;
+    }
+
+    if (normalizar(name) !== normalizar(nombreCorrecto)) {
+      alert("Este mensaje no es para ti 💌");
+      return;
+    }
+
+    nameScreen.style.display = "none";
+  });
+
+  // BOTÓN "SÍ, ACEPTO"
   button.addEventListener("click", () => {
     overlay.style.display = "flex";
-    overlay.style.opacity = "1";
-    createHearts();
   });
 
+  // CERRAR OVERLAY CON CLIC
   overlay.addEventListener("click", () => {
-    overlay.classList.add("hide");
-
-    setTimeout(() => {
-      overlay.style.display = "none";
-      overlay.classList.remove("hide");
-      stopHearts();
-    }, 800);
+    overlay.style.display = "none";
   });
+  let heartInterval;
 
-  function createHearts() {
-    heartsInterval = setInterval(() => {
-      const heart = document.createElement("div");
-      heart.classList.add("heart");
-      heart.textContent = "💖";
-      heart.style.left = Math.random() * 100 + "vw";
-      heart.style.fontSize = Math.random() * 20 + 20 + "px";
-      overlay.appendChild(heart);
+function crearCorazon() {
+  const heart = document.createElement("div");
+  heart.classList.add("heart");
+  heart.innerText = "❤️";
 
-      setTimeout(() => {
-        heart.remove();
-      }, 6000);
-    }, 300);
-  }
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.fontSize = Math.random() * 20 + 20 + "px";
 
-  function stopHearts() {
-    clearInterval(heartsInterval);
-    document.querySelectorAll(".heart").forEach(h => h.remove());
-  }
+  document.body.appendChild(heart);
+
+  setTimeout(() => {
+    heart.remove();
+  }, 4000);
+}
+
+button.addEventListener("click", () => {
+  overlay.style.display = "flex";
+
+  heartInterval = setInterval(crearCorazon, 300);
+});
+
+overlay.addEventListener("click", () => {
+  overlay.style.display = "none";
+  clearInterval(heartInterval);
+});
 </script>
+
 
 
 
 
 </body>
 </html>
+
